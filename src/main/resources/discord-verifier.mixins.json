@@ -3,7 +3,7 @@
 	"package": "org.iolhaven.discordverifier.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"ExampleMixin"
+		"PlayerManagerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
