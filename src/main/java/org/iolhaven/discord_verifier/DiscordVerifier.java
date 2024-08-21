@@ -14,6 +14,6 @@ public class DiscordVerifier implements ModInitializer {
 
 		DiscordBot bot = new DiscordBot();
 
-		LOGGER.debug("DiscordVerifier finished initializing.");
+		LOGGER.info("DiscordVerifier finished initializing.");
 	}
 }

@@ -3,7 +3,6 @@ package org.iolhaven.discord_verifier;
 import com.novamaday.d4j.gradle.simplebot.GlobalCommandRegistrar;
 import discord4j.common.util.Snowflake;
 import discord4j.core.DiscordClient;
-import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent;
 import discord4j.core.object.command.ApplicationCommandInteractionOption;
 import discord4j.core.object.command.ApplicationCommandInteractionOptionValue;
@@ -13,27 +12,22 @@ import java.util.List;
 import java.util.Optional;
 
 class DiscordBot {
-    private GatewayDiscordClient discordClient;
-
     public DiscordBot() {
         DiscordClient client = DiscordClient.create(ModConfig.getInstance().getDiscordToken());
-        Mono<Void> login = client.withGateway(gateway ->
+        client.withGateway(gateway ->
         {
-            discordClient = gateway;
-            return Mono.empty();
-        });
-        login.block();
-
-        try {
-            new GlobalCommandRegistrar(discordClient.getRestClient()).registerCommands(List.of("verify.json"));
-        } catch (Exception e) {
-            DiscordVerifier.LOGGER.error("Error initializing Discord application commands: {}", e.getMessage());
-        }
-
-        discordClient.on(ChatInputInteractionEvent.class, event -> {
-            if (event.getCommandName().equals("verify")) {
-                return handleVerification(event);
+            try {
+                new GlobalCommandRegistrar(gateway.getRestClient()).registerCommands(List.of("verify.json"));
+            } catch (Exception e) {
+                DiscordVerifier.LOGGER.error("Error initializing Discord application commands: {}", e.getMessage());
             }
+
+            gateway.on(ChatInputInteractionEvent.class, event -> {
+                if (event.getCommandName().equals("verify")) {
+                    return handleVerification(event);
+                }
+                return Mono.empty();
+            }).subscribe();
             return Mono.empty();
         }).subscribe();
     }
