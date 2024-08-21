@@ -17,17 +17,9 @@
 	"entrypoints": {
 		"main": [
 			"org.iolhaven.discordverifier.DiscordVerifier"
-		],
-		"client": [
-			"org.iolhaven.discordverifier.DiscordVerifierClient"
 		]
 	},
 	"mixins": [
-		"discord-verifier.mixins.json",
-		{
-			"config": "discord-verifier.client.mixins.json",
-			"environment": "client"
-		}
 	],
 	"depends": {
 		"fabricloader": ">=0.15.11",

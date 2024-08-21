@@ -24,7 +24,6 @@ loom {
 	mods {
 		"discord-verifier" {
 			sourceSet sourceSets.main
-			sourceSet sourceSets.client
 		}
 	}
 
