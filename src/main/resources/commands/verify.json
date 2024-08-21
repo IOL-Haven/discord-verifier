@@ -1,0 +1,12 @@
+{
+  "name": "verify",
+  "description": "Links your Minecraft account to your Discord account.",
+  "options": [
+    {
+      "name": "username",
+      "description": "Your Minecraft username",
+      "type": 3,
+      "required": true
+    }
+  ]
+}
