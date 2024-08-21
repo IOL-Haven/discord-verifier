@@ -1,4 +1,4 @@
-package org.iolhaven.discordverifier;
+package org.iolhaven.discord_verifier;
 
 import com.novamaday.d4j.gradle.simplebot.GlobalCommandRegistrar;
 import discord4j.common.util.Snowflake;
@@ -7,7 +7,6 @@ import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent;
 import discord4j.core.object.command.ApplicationCommandInteractionOption;
 import discord4j.core.object.command.ApplicationCommandInteractionOptionValue;
-import org.slf4j.Logger;
 import reactor.core.publisher.Mono;
 
 import java.util.List;

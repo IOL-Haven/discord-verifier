@@ -1,6 +1,6 @@
 {
 	"required": true,
-	"package": "org.iolhaven.discordverifier.mixin",
+	"package": "org.iolhaven.discord_verifier.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
 		"PlayerManagerMixin"

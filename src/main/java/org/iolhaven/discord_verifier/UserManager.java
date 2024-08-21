@@ -1,4 +1,4 @@
-package org.iolhaven.discordverifier;
+package org.iolhaven.discord_verifier;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -15,7 +15,7 @@ import java.util.Optional;
 public class UserManager {
     private static UserManager INSTANCE;
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    private static final File USER_RECORD = new File(FabricLoader.getInstance().getConfigDir().toFile(), "discordverifier/users.json");
+    private static final File USER_RECORD = new File(FabricLoader.getInstance().getConfigDir().toFile(), "discord_verifier/users.json");
 
     private UserManager() {
         try {
