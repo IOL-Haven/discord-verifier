@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+// Adapted from https://github.com/Discord4J/example-projects/blob/master/gradle-simple-bot/src/main/java/com/novamaday/d4j/gradle/simplebot/GlobalCommandRegistrar.java
+// Reads command descriptions from json files and automatically registers them.
 public class GlobalCommandRegistrar {
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
