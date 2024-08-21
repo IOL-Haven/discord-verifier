@@ -4,7 +4,6 @@ import com.novamaday.d4j.gradle.simplebot.GlobalCommandRegistrar;
 import discord4j.core.DiscordClient;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent;
-import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import reactor.core.publisher.Mono;
 
@@ -12,9 +11,9 @@ import java.util.List;
 
 public class DiscordBot {
     private GatewayDiscordClient discordClient;
-    private final Usernames users;
+    private final UserManager users;
 
-    public DiscordBot(Usernames users, Logger logger) {
+    public DiscordBot(UserManager users, Logger logger) {
         this.users = users;
 
         DiscordClient client = DiscordClient.create("TOKEN");
@@ -28,7 +27,7 @@ public class DiscordBot {
         try {
             new GlobalCommandRegistrar(discordClient.getRestClient()).registerCommands(List.of("verify.json"));
         } catch (Exception e) {
-            logger.error("Error initializing Discord application commands: {}", e.toString());
+            logger.error("Error initializing Discord application commands: {}", e.getMessage());
         }
 
         discordClient.on(ChatInputInteractionEvent.class, event -> {
