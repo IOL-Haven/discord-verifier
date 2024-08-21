@@ -19,6 +19,9 @@ public class UserManager {
 
     private UserManager() {
         try {
+            if(USER_RECORD.getParentFile() != null) {
+                USER_RECORD.getParentFile().mkdirs();
+            }
             USER_RECORD.createNewFile();
         }
         catch (Exception e) {
