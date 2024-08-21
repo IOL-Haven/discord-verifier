@@ -19,10 +19,7 @@
 		]
 	},
 	"mixins": [
-		"discord-verifier.mixins.json",
-		{
-			"environment": "server"
-		}
+		"discord-verifier.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.15.11",
