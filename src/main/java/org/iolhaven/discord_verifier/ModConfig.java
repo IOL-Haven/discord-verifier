@@ -6,12 +6,13 @@ import com.google.gson.GsonBuilder;
 
 import java.io.*;
 
-public class ModConfig {
+final class ModConfig {
     private static ModConfig INSTANCE;
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final File CONFIG_FILE = new File(FabricLoader.getInstance().getConfigDir().toFile(), "discord_verifier/config.json");
 
     private final String geyserUserPrefix = ".";
+    private final String discordToken = "";
 
     public static ModConfig getInstance() {
         if(INSTANCE == null) {
@@ -39,4 +40,5 @@ public class ModConfig {
     public String getGeyserUserPrefix() {
         return geyserUserPrefix;
     }
+    public String getDiscordToken() { return discordToken; }
 }

@@ -12,11 +12,11 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 import java.util.Optional;
 
-public class DiscordBot {
+class DiscordBot {
     private GatewayDiscordClient discordClient;
 
     public DiscordBot() {
-        DiscordClient client = DiscordClient.create("TOKEN");
+        DiscordClient client = DiscordClient.create(ModConfig.getInstance().getDiscordToken());
         Mono<Void> login = client.withGateway(gateway ->
         {
             discordClient = gateway;
