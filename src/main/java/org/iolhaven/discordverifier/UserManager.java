@@ -5,31 +5,32 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.mojang.authlib.GameProfile;
 import discord4j.common.util.Snowflake;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Pair;
-import org.slf4j.Logger;
 
 import java.io.*;
 import java.util.List;
 import java.util.Optional;
 
 public class UserManager {
+    private static UserManager INSTANCE;
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+    private static final File USER_RECORD = new File(FabricLoader.getInstance().getConfigDir().toFile(), "discordverifier/users.json");
 
-    private final File USER_RECORD;
-    private final ModConfig CONFIG;
-    private final Logger LOGGER;
-
-    public UserManager(File user_record, ModConfig config, Logger logger) {
-        USER_RECORD = user_record;
-        CONFIG = config;
-        LOGGER = logger;
-
+    private UserManager() {
         try {
             USER_RECORD.createNewFile();
         }
         catch (Exception e) {
-            LOGGER.error("An error occurred when trying to create a configuration file: {}", user_record);
+            DiscordVerifier.LOGGER.error("An error occurred when trying to create a configuration file: {}", e.getMessage());
         }
+    }
+
+    public static UserManager getInstance() {
+        if(INSTANCE == null) {
+            INSTANCE = new UserManager();
+        }
+        return INSTANCE;
     }
 
     public Optional<String> writeUsername(Snowflake discord, String minecraft) {
@@ -40,7 +41,7 @@ public class UserManager {
             out = Optional.of(eraseExistingEntry(users, discord));
             users.add(new Pair<>(discord, minecraft));
         } catch (Exception e) {
-            LOGGER.error("Error loading users: {}", e.getMessage());
+            DiscordVerifier.LOGGER.error("Error loading users: {}", e.getMessage());
             return out;
         }
 
@@ -48,7 +49,7 @@ public class UserManager {
             GSON.toJson(users, writer);
         }
         catch (Exception e) {
-            LOGGER.error("Error loading users: {}", e.getMessage());
+            DiscordVerifier.LOGGER.error("Error loading users: {}", e.getMessage());
         }
 
         return out;
@@ -66,12 +67,12 @@ public class UserManager {
             users = GSON.fromJson(reader, new TypeToken<>() {});
             return users.stream().anyMatch(pair -> matchMinecraftUsername(minecraftUser, pair.getRight()));
         } catch (Exception e) {
-            LOGGER.error("Error loading users: {}", e.getMessage());
+            DiscordVerifier.LOGGER.error("Error loading users: {}", e.getMessage());
             return false;
         }
     }
 
     private boolean matchMinecraftUsername(GameProfile profile, String username) {
-        return profile.getName().matches("(%s)?%s".formatted(CONFIG.getGeyserUserPrefix(), username));
+        return profile.getName().matches("(%s)?%s".formatted(ModConfig.getInstance().getGeyserUserPrefix(), username));
     }
 }

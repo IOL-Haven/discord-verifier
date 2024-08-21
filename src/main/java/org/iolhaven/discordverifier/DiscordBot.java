@@ -15,11 +15,8 @@ import java.util.Optional;
 
 public class DiscordBot {
     private GatewayDiscordClient discordClient;
-    private final UserManager users;
 
-    public DiscordBot(UserManager users, Logger logger) {
-        this.users = users;
-
+    public DiscordBot() {
         DiscordClient client = DiscordClient.create("TOKEN");
         Mono<Void> login = client.withGateway(gateway ->
         {
@@ -31,7 +28,7 @@ public class DiscordBot {
         try {
             new GlobalCommandRegistrar(discordClient.getRestClient()).registerCommands(List.of("verify.json"));
         } catch (Exception e) {
-            logger.error("Error initializing Discord application commands: {}", e.getMessage());
+            DiscordVerifier.LOGGER.error("Error initializing Discord application commands: {}", e.getMessage());
         }
 
         discordClient.on(ChatInputInteractionEvent.class, event -> {
@@ -51,7 +48,7 @@ public class DiscordBot {
                 .map(ApplicationCommandInteractionOptionValue::asString)
                 .orElse("");
 
-        Optional<String> userManagerResponse = users.writeUsername(discord, username);
+        Optional<String> userManagerResponse = UserManager.getInstance().writeUsername(discord, username);
         userManagerResponse.ifPresent(s -> reply.append("You were already verified under the Minecraft username %s. It will be erased and replaced with the username %s. No player data will be lost.\n".formatted(s, username)));
 
         reply.append("Successfully verified the Minecraft account %s as belonging to Discord user %s!\n\n*You may now log onto the server.*".formatted(username, discord_name));

@@ -15,9 +15,7 @@ public class DiscordVerifier implements ModInitializer {
 	public void onInitialize() {
 		LOGGER.debug("Starting initialization of DiscordVerifier");
 
-		ModConfig config = ModConfig.loadConfig(LOGGER);
-		UserManager users = new UserManager(new File(FabricLoader.getInstance().getConfigDir().toFile(), "discordverifier/users.json"), config, LOGGER);
-		DiscordBot bot = new DiscordBot(users, LOGGER);
+		DiscordBot bot = new DiscordBot();
 
 		LOGGER.debug("DiscordVerifier finished initializing.");
 	}
