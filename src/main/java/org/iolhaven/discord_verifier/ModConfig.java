@@ -32,6 +32,12 @@ final class ModConfig {
             }
         } else {
             config = new ModConfig();
+            try (Writer writer = new FileWriter(CONFIG_FILE)) {
+                GSON.toJson(config, writer);
+            }
+            catch (Exception e) {
+                DiscordVerifier.LOGGER.error("Error loading config: {}", e.getMessage());
+            }
         }
         DiscordVerifier.LOGGER.info("Loaded mod config.");
         return config;
