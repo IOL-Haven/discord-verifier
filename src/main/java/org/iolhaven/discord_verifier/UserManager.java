@@ -9,6 +9,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Pair;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,14 +19,18 @@ public class UserManager {
     private static final File USER_RECORD = new File(FabricLoader.getInstance().getConfigDir().toFile(), "discord_verifier/users.json");
 
     private UserManager() {
-        try {
-            if(USER_RECORD.getParentFile() != null) {
-                USER_RECORD.getParentFile().mkdirs();
+        if(!USER_RECORD.exists()) {
+            try {
+                if (USER_RECORD.getParentFile() != null) {
+                    USER_RECORD.getParentFile().mkdirs();
+                }
+                USER_RECORD.createNewFile();
+                try (Writer writer = new FileWriter(USER_RECORD)) {
+                    GSON.toJson(new ArrayList<Pair<Snowflake, String>>(), writer);
+                }
+            } catch (Exception e) {
+                DiscordVerifier.LOGGER.error("An error occurred when trying to create a configuration file: {}", e.getMessage());
             }
-            USER_RECORD.createNewFile();
-        }
-        catch (Exception e) {
-            DiscordVerifier.LOGGER.error("An error occurred when trying to create a configuration file: {}", e.getMessage());
         }
     }
 
@@ -52,7 +57,7 @@ public class UserManager {
             GSON.toJson(users, writer);
         }
         catch (Exception e) {
-            DiscordVerifier.LOGGER.error("Error loading users: {}", e.getMessage());
+            DiscordVerifier.LOGGER.error("Error writing new user to a file: {}", e.getMessage());
         }
 
         return out;
@@ -65,12 +70,12 @@ public class UserManager {
     }
 
     public boolean userIsVerified(GameProfile minecraftUser) {
-        List<Pair<String, String>> users;
+        List<Pair<Snowflake, String>> users;
         try (Reader reader = new FileReader(USER_RECORD)) {
             users = GSON.fromJson(reader, new TypeToken<>() {});
             return users.stream().anyMatch(pair -> matchMinecraftUsername(minecraftUser, pair.getRight()));
         } catch (Exception e) {
-            DiscordVerifier.LOGGER.error("Error loading users: {}", e.getMessage());
+            DiscordVerifier.LOGGER.error("Error checking user verification: {}", e.getMessage());
             return false;
         }
     }
