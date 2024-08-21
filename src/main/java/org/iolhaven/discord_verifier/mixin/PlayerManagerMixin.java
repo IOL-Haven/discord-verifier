@@ -18,7 +18,7 @@ public class PlayerManagerMixin {
 		boolean discordVerified = UserManager.getInstance().userIsVerified(profile);
 
 		if(cir.getReturnValue() == null && !discordVerified) {
-			cir.setReturnValue(Text.translatable("discord_verifier.not_verified"));
+			cir.setReturnValue(Text.literal("To gain access, you need to verify your Minecraft account using the Discord bot!"));
 		}
 	}
 }
