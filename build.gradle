@@ -38,7 +38,8 @@ dependencies {
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	
+
+	implementation 'com.discord4j:discord4j-core:v3.2.6'
 }
 
 processResources {
