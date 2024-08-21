@@ -3,31 +3,31 @@
 	"id": "discord-verifier",
 	"version": "${version}",
 	"name": "Discord Verifier",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "Requires users to verify their Minecraft username by using a Discord command before they can gain access to the server.",
 	"authors": [
-		"Me!"
+		"TechnoPorg"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/IOL-Haven/discord-verifier"
 	},
-	"license": "CC0-1.0",
+	"license": "GPL-3.0",
 	"icon": "assets/discord-verifier/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"org.iolhaven.discordverifier.DiscordVerifier"
+			"org.iolhaven.discord_verifier.DiscordVerifier"
 		]
 	},
 	"mixins": [
+		"discord-verifier.mixins.json",
+		{
+			"environment": "server"
+		}
 	],
 	"depends": {
 		"fabricloader": ">=0.15.11",
 		"minecraft": "~1.21",
 		"java": ">=21",
 		"fabric-api": "*"
-	},
-	"suggests": {
-		"another-mod": "*"
 	}
 }
