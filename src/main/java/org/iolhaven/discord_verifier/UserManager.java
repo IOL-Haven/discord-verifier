@@ -46,7 +46,7 @@ public class UserManager {
         Optional<String> out = Optional.empty();
         try (Reader reader = new FileReader(USER_RECORD)) {
             users = GSON.fromJson(reader, new TypeToken<>() {});
-            out = Optional.of(eraseExistingEntry(users, discord));
+            out = eraseExistingEntry(users, discord);
             users.add(new Pair<>(discord, minecraft));
         } catch (Exception e) {
             DiscordVerifier.LOGGER.error("Error loading users: {}", e.getMessage());
@@ -63,10 +63,10 @@ public class UserManager {
         return out;
     }
 
-    private static String eraseExistingEntry(List<Pair<Snowflake, String>> users, Snowflake discord) {
+    private static Optional<String> eraseExistingEntry(List<Pair<Snowflake, String>> users, Snowflake discord) {
         String out = String.join(", ", users.stream().filter(pair -> pair.getLeft().equals(discord)).map(Pair::getRight).toList());
         users.removeIf(pair -> pair.getLeft().equals(discord));
-        return out;
+        return out.isEmpty() ? Optional.empty() : Optional.of(out);
     }
 
     public boolean userIsVerified(GameProfile minecraftUser) {
