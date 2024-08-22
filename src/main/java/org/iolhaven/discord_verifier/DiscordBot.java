@@ -16,28 +16,33 @@ import java.util.Optional;
 class DiscordBot {
     // Initialize and launch the bot
     public DiscordBot() {
-        // Create a client and register it with the token from the config.
-        DiscordClient client = DiscordClient.create(ModConfig.getInstance().getDiscordToken());
-        // Create an active connection with Discord
-        client.withGateway(gateway ->
-        {
-            // Register command
-            try {
-                new GlobalCommandRegistrar(gateway.getRestClient()).registerCommands(List.of("verify.json"));
-            } catch (Exception e) {
-                DiscordVerifier.LOGGER.error("Error initializing Discord application commands: {}", e.getMessage());
-            }
-
-            // Indefinitely handle the /verify command
-            return gateway.on(ChatInputInteractionEvent.class, event -> {
-                if (event.getCommandName().equals("verify")) {
-                    return handleVerification(event);
+        try {
+            // Create a client and register it with the token from the config.
+            DiscordClient client = DiscordClient.create(ModConfig.getInstance().getDiscordToken());
+            // Create an active connection with Discord
+            client.withGateway(gateway ->
+            {
+                // Register command
+                try {
+                    new GlobalCommandRegistrar(gateway.getRestClient()).registerCommands(List.of("verify.json"));
+                } catch (Exception e) {
+                    DiscordVerifier.LOGGER.error("Error initializing Discord application commands: {}", e.getMessage());
                 }
-                return Mono.empty();
-            });
-        }).subscribe(); // Run in the background
 
-        DiscordVerifier.LOGGER.debug("Discord bot initialized!");
+                // Indefinitely handle the /verify command
+                return gateway.on(ChatInputInteractionEvent.class, event -> {
+                    if (event.getCommandName().equals("verify")) {
+                        return handleVerification(event);
+                    }
+                    return Mono.empty();
+                });
+            }).subscribe(); // Run in the background
+
+            DiscordVerifier.LOGGER.debug("Discord bot initialized!");
+        }
+        catch (Exception e) {
+            DiscordVerifier.LOGGER.error("Invalid Discord app token!");
+        }
     }
 
     // Respond to the /verify command
