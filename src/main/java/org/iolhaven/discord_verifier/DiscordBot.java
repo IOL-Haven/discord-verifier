@@ -51,7 +51,7 @@ class DiscordBot {
 
         // Get the Discord account ID of the interacting user, and the Minecraft username they want to register
         Snowflake discord_id = event.getInteraction().getUser().getId();
-        String minecraft_username = event.getOption("Username")
+        String minecraft_username = event.getOption("username")
                 .flatMap(ApplicationCommandInteractionOption::getValue)
                 .map(ApplicationCommandInteractionOptionValue::asString)
                 .orElse("");
@@ -62,7 +62,7 @@ class DiscordBot {
         reply.append("Successfully verified the Minecraft account %s as belonging to Discord user %s!\n\n**You may now log onto the server.**".formatted(minecraft_username, event.getInteraction().getUser().getUsername()));
         // If there was already an account registered for this user, there will be a message that it was unregistered to make room for the new one.
         // That message will get added to the beginning of the reply.
-        userManagerResponse.ifPresent(s -> reply.append("\n\n*You were already verified under the Minecraft minecraft_username %s. It will be erased and replaced with the minecraft_username %s. No player data will be lost.*".formatted(s, minecraft_username)));
+        userManagerResponse.ifPresent(s -> reply.append("\n\n*You were already verified under the Minecraft username %s. That **verification data** will be overwritten by the Minecraft username %s. **No player data will be lost.***".formatted(s, minecraft_username)));
 
         DiscordVerifier.LOGGER.trace("Handled verification of user {}", event.getInteraction().getUser().getUsername());
         // Send the reply back to the user who sent the command
