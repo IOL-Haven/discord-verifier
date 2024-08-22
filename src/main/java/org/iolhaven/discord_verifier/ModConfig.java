@@ -16,7 +16,7 @@ class ModConfig {
     private static final File CONFIG_FILE = new File(FabricLoader.getInstance().getConfigDir().toFile(), "discord_verifier/config.json");
 
     // The prefix that is set in Geyser/Floodgate's config that gets appended to Bedrock usernames.
-    private String geyserUserPrefix = ".";
+    private String geyserUserPrefix = "";
     // The Discord bot token needed to connect it to Discord.
     private String discordToken = "";
 
