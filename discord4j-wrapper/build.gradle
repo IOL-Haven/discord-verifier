@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+// Register Discord4J as a dependency, which will then make it available to the parent project at runtime.
+dependencies {
+    implementation 'com.discord4j:discord4j-core:3.2.6'
+}
+
+// Build this project into a fat JAR containing Discord4J and all its dependencies, so that mod consumers don't need to install them manually.
+jar {
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy DuplicatesStrategy.EXCLUDE
+}
+
+group = 'org.iolhaven'

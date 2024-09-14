@@ -5,6 +5,11 @@ build/
 out/
 classes/
 
+Discord4J/.gradle/
+Discord4J/build/
+Discord4J/out/
+Discord4J/classes/
+
 # eclipse
 
 *.launch
