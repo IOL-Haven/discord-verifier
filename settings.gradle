@@ -1,5 +1,6 @@
 pluginManagement {
 	repositories {
+		mavenLocal()
 		maven {
 			name = 'Fabric'
 			url = 'https://maven.fabricmc.net/'
@@ -9,4 +10,4 @@ pluginManagement {
 	}
 }
 
-includeBuild "Discord4J"
+includeBuild "Discord4J-Wrapper"
