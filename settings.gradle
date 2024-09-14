@@ -10,4 +10,5 @@ pluginManagement {
 	}
 }
 
-includeBuild "Discord4J-Wrapper"
+// Register the Discord4J wrapper as a subproject that can be used as part of a composite build
+includeBuild "discord4j-wrapper"
