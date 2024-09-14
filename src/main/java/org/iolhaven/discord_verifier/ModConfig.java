@@ -39,16 +39,16 @@ class ModConfig {
                 DiscordVerifier.LOGGER.error("Error loading config: {}", e.getMessage());
                 config = new ModConfig();
             }
-        } else { // Write a blank config file to disk for the server admin to populate.
+        } else { // Write a blank config file to disk to be filled in by the server admin.
             config = new ModConfig();
-            try (Writer writer = new FileWriter(CONFIG_FILE)) {
-                if(CONFIG_FILE.getParentFile() != null) {
-                    CONFIG_FILE.getParentFile().mkdirs();
-                }
+            try {
+                CONFIG_FILE.getParentFile().mkdirs();
                 CONFIG_FILE.createNewFile();
-                GSON.toJson(config, writer);
 
-                DiscordVerifier.LOGGER.debug("Wrote new blank mod config.");
+                try (Writer writer = new FileWriter(CONFIG_FILE)) {
+                    GSON.toJson(config, writer);
+                    DiscordVerifier.LOGGER.debug("Wrote new blank mod config.");
+                }
             }
             catch (Exception e) {
                 DiscordVerifier.LOGGER.error("Error writing blank config: {}", e.getMessage());
