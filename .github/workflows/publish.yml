@@ -19,7 +19,7 @@ on:
 env:
   JAVA_VERSION: 21
   VERSION: ${{ github.event.inputs.mod_version }}+${{ github.event.inputs.minecraft_version }}
-  RELEASE_NAME: Discord Verifier $ {{ env.VERSION }}
+  RELEASE_NAME: Discord Verifier ${{ env.VERSION }}
   MODRINTH_TOKEN: ${{ secrets.PUBLISH_MODRINTH_TOKEN }}
   CURSEFORGE_TOKEN: ${{ secrets.PUBLISH_CURSEFORGE_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.PUBLISH_GITHUB_TOKEN }}
