@@ -4,6 +4,7 @@ import discord4j.common.JacksonResources;
 import discord4j.discordjson.json.ApplicationCommandRequest;
 import discord4j.rest.RestClient;
 import discord4j.rest.service.ApplicationService;
+import org.iolhaven.discord_verifier.DiscordVerifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,7 +79,7 @@ public class GlobalCommandRegistrar {
      * @return The contents of the file as a String, otherwise throws an exception
      */
     private static String getResourceFileAsString(String fileName) throws IOException {
-        ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+        ClassLoader classLoader = DiscordVerifier.class.getClassLoader();
         try (InputStream resourceAsStream = classLoader.getResourceAsStream(fileName)) {
             if (resourceAsStream == null) return null;
             try (InputStreamReader inputStreamReader = new InputStreamReader(resourceAsStream);
