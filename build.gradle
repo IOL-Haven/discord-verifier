@@ -39,7 +39,7 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	// Include the fat Discord4J wrapper jar in the output jar. The wrapper jar contains the Discord4J code and all its dependencies.
-	include(implementation('org.iolhaven:discord4j-wrapper'))
+	include(implementation('org.iolhaven:discord4j-wrapper:1.0.0'))
 }
 
 processResources {

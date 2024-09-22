@@ -20,3 +20,4 @@ jar {
 }
 
 group = 'org.iolhaven'
+version = '1.0.0'
