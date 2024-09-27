@@ -3,10 +3,6 @@ name: Publish on GitHub, CurseForge & Modrinth
 on:
   workflow_dispatch:
     inputs:
-      changelog:
-        required: true
-        type: string
-        description: The changelog for this version
       mod_version:
         required: true
         type: number
@@ -67,6 +63,8 @@ jobs:
           name: "${{env.RELEASE_NAME}}"
           version: "${{env.VERSION}}"
           version-type: release
+
+          changelog-file: "CHANGELOG.md"
 
           loaders: fabric
           java: "${{env.JAVA_VERSION}}"
