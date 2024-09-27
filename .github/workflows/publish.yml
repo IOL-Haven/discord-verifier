@@ -14,8 +14,7 @@ on:
 
 env:
   JAVA_VERSION: 21
-  VERSION: ${{ github.event.inputs.mod_version }}+${{ github.event.inputs.minecraft_version }}
-  RELEASE_NAME: Discord Verifier ${{ env.VERSION }}
+  RELEASE_NAME: ${{ github.event.inputs.mod_version }}
   MODRINTH_TOKEN: ${{ secrets.PUBLISH_MODRINTH_TOKEN }}
   CURSEFORGE_TOKEN: ${{ secrets.PUBLISH_CURSEFORGE_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.PUBLISH_GITHUB_TOKEN }}
@@ -57,11 +56,8 @@ jobs:
           modrinth-id: CjGsjuQx
           modrinth-token: "${{env.MODRINTH_TOKEN}}"
 
-          github-tag: "v${{env.VERSION}}"
-          github-token: "${{env.GITHUB_TOKEN}}"
-
           name: "${{env.RELEASE_NAME}}"
-          version: "${{env.VERSION}}"
+          version: "${{ github.event.inputs.mod_version }}"
           version-type: release
 
           changelog-file: "CHANGELOG.md"
